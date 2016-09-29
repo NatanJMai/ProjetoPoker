@@ -1,6 +1,6 @@
 import random
 from cartas import *
-from bottle import run, get, post, view, request, redirect
+from bottle import run, get, post, view, request, redirect, route, static_file
 
 global cartas, valores, tipos
 
@@ -27,11 +27,9 @@ def index():
 	return {'cartas': cartas}
     
 
-@post('/sendMessage')
-def newMessage():
-    user = request.forms.get('user')
-    msg = request.forms.get('message')
-    cartas.append((user, msg))
-    redirect('/')
+@route('/img/:filename', name='static')
+def send_image(filename):
+    return static_file(filename, root='./img/', mimetype='image/png')
+
 
 run(host='localhost', port=8080)
