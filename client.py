@@ -13,10 +13,16 @@ def envia_cliente():
 	r = requests.get('http://localhost:' + server + '/get_players/'+argv[1])
 
 
-@get('/get_cartas')
-def get_cartas():
-	r = requests.get('http://localhost:' + server + '/get_cartas')
-	print(r.text)
+#@get('/get_cartas')
+#def get_cartas():
+#	r = requests.get('http://localhost:' + server + '/get_cartas')
+	#print(r.text)
+
+@get('/recebe_cartas/<mao>')
+def recebe_cartas(mao):
+	cartas.append(mao)
+	print(cartas)
+
 
 
 @get('/')
