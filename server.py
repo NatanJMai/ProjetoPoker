@@ -1,6 +1,6 @@
 import random
 import requests
-from cartas import *
+import json
 from bottle import run, get, post, view, request, redirect, route, static_file
 
 global cartas, valores, naipes
@@ -10,6 +10,7 @@ cartas   = []
 valores  = [str(i) for i in range(2, 10)] + ['T', 'J', 'Q', 'K', 'A']
 players  = []
 d_cartas = {}
+
 
 @get('/gerar_cartas')
 def gera_cartas():
@@ -28,24 +29,23 @@ def embaralhar_cartas():
 
 @get('/get_players/<porta>')
 def get_players(porta):
-	players.append(porta)
-	print(players)
+	if porta not in players:
+		players.append(porta)
 
 
 @get('/distribuir_cartas')
 def distribuir_cartas():
 	for c in players:
-		cartas 		= get_cartas()
-		d_cartas[c] = cartas
-		requests.get('http://localhost:' + c + '/recebe_cartas/' + cartas)
-	print(d_cartas)
+		mao 		= get_cartas()
+		d_cartas[c] = mao
+		requests.get('http://localhost:' + c + '/recebe_cartas/' + mao)
+	redirect('/')
 
-@get('/get_cartas')
+
 def get_cartas():
 	c1 = cartas.pop(0)
 	c2 = cartas.pop(0)
-	return str([c1, c2])
-
+	return json.dumps([c1, c2])
 
 
 @get('/')

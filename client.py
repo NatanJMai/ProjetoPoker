@@ -28,7 +28,7 @@ def recebe_cartas(mao):
 @get('/')
 @view('index')
 def index():
-	return "Cliente"
+	return "Cliente, suas cartas sao: " + str(cartas)
 
 envia_cliente()
 
