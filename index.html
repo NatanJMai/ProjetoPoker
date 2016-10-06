@@ -15,34 +15,27 @@
 	<body>
 		<div class="container">
 
-			<h1>Lista de Cartas</h1>
-            <!-- <table class="table">
-				<thead>
-					<tr>
-					<th>Tipo</th>
-					<th>Valor</th>
-					</tr>
-				</thead>
-				<tbody>
-    				%for c in cartas:
-					    <tr> 
-					    	<td>{{c.tipo}}</td>
-				    		<td>{{c.valor}}</td>
-					    </tr>
-					%end
-				</tbody>
-			</table> -->
-
 			<a href="/gerar_cartas" class="btn btn-primary">Gerar</a>
 			<a href="/embaralhar_cartas" class="btn btn-primary">Embaralhar</a>
-		    <div class="col-md-12">
-		    	%for c in cartas:
-			    	<div class="col-md-3" style="padding: 10px;">
-			    		<img src="/img/{{c.valor}}_{{c.tipo}}.png" alt="">
-			    	</div>
-				%end
+			<div class="col-md-12">
+			<h1>Lista de Cartas</h1>
+            <table class="table">
+            
+            <thead>
+            	<tr>
+            		<th>Carta</th>
+            	</tr>
+            </thead>
+            <tbody>
+    			%for c in cartas:
+				    <tr> 
+				    	<td>{{c}}</td>
+				    </tr>
+				%end            	
+            </tbody>
+				
+			</table>
 			</div>
-
 		</div>
 	</body>
 </html>

@@ -3,21 +3,20 @@ import requests
 from cartas import *
 from bottle import run, get, post, view, request, redirect, route, static_file
 
-global cartas, valores, tipos
+global cartas, valores, naipes
 
-tipos    = ['Paus', 'Espadas', 'Copas', 'Ouros']
+naipes   = ['s', 'h', 'c', 'd']
 cartas   = []
-valores  = [str(i) for i in range(1,11)] + ['J', 'Q', 'K']
+valores  = [str(i) for i in range(2, 10)] + ['T', 'J', 'Q', 'K', 'A']
 players  = []
 d_cartas = {}
 
 @get('/gerar_cartas')
 def gera_cartas():
 	if not cartas: # gerar cartas somente uma vez
-		for i in tipos:
+		for i in naipes:
 			for j in valores:
-				cartas.append(Carta(i, j))
-	#random.shuffle(cartas)
+				cartas.append(j+i)
 	redirect('/')
 
 
