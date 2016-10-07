@@ -36,9 +36,10 @@ def get_players(porta):
 @get('/distribuir_cartas')
 def distribuir_cartas():
 	for c in players:
-		mao 		= get_cartas()
-		d_cartas[c] = mao
-		requests.get('http://localhost:' + c + '/recebe_cartas/' + mao)
+		if not d_cartas.get(c):
+			mao = get_cartas()
+			d_cartas[c] = mao
+			requests.get('http://localhost:' + c + '/recebe_cartas/' + mao)
 	redirect('/')
 
 

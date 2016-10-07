@@ -2,7 +2,6 @@ import random
 import requests
 import ast
 from sys import argv
-from cartas import *
 from bottle import run, get, post, view, request, redirect, route, static_file
 
 global cartas
