@@ -1,5 +1,6 @@
 import random
 import requests
+import ast
 from sys import argv
 from cartas import *
 from bottle import run, get, post, view, request, redirect, route, static_file
@@ -23,13 +24,16 @@ def recebe_cartas(mao):
 	cartas.append(mao)
 	print(cartas)
 
-
-
 @get('/')
-@view('index')
+@view('client')
 def index():
-	return "Cliente, suas cartas sao: " + str(cartas)
+	convert_cartas = ast.literal_eval(cartas[0]) if cartas else []
+	return {'cartas': convert_cartas}
 
 envia_cliente()
+
+@route('/img/:filename', name='static')
+def send_image(filename):
+    return static_file(filename, root='./img/', mimetype='image/png')
 
 run(host='localhost', port=int(argv[1]))
