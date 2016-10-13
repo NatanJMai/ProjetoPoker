@@ -1,8 +1,9 @@
-import random
 import requests
+import random
 import json
 import ast
-from bottle import run, get, post, view, request, redirect, route, static_file
+from bottle   import run, get, post, view, request, redirect, route, static_file
+from operator import itemgetter
 
 global cartas, valores, naipes, h_cartas
 
@@ -52,23 +53,26 @@ def get_players(porta):
 @get('/distribuir_cartas')
 def distribuir_cartas():
 	l = []
-	for c in players:
-		if not d_cartas.get(c):
+	for p in players:
+		if not d_cartas.get(p):
 			mao = get_cartas()
-			d_cartas[c] = ast.literal_eval(mao)
-			requests.get('http://localhost:' + c + '/recebe_cartas/' + mao)
+			d_cartas[p] = ast.literal_eval(mao)
+			requests.get('http://localhost:' + p + '/recebe_cartas/' + mao)
 
-			valor = comparar(d_cartas[c][0][0], d_cartas[c][1][0])
-			l.append((c, valor))
+			valor = comparar(d_cartas[p][0][0], d_cartas[p][1][0])
+			l.append((p, valor))
 
 	# a = comparar(d_cartas['8081'][0][0], d_cartas['8081'][1][0])
 	# b = comparar(d_cartas['8082'][0][0], d_cartas['8082'][1][0])
 	
 	if len(l) > 1:
-		maior = max(l[0][1], l[1][1])
-		print("Maior Carta: %d" % maior)
-	else:
-		print("Maior Carta: %d" % l[0][1])
+		# maior = max(l)
+		l.sort(key = itemgetter(1), reverse = True)
+		maior = l[0]
+
+		print("Maior Carta: ", maior)
+	#else:
+	#	print("Maior Carta: %d" % l[0][1])
 
 	# print(l)
 
