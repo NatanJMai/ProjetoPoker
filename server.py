@@ -9,6 +9,7 @@ global cartas, valores, naipes, h_cartas
 
 naipes   = ['s', 'h', 'c', 'd']
 cartas   = []
+erros 	 = {}
 valores  = [str(i) for i in range(2, 10)] + ['T', 'J', 'Q', 'K', 'A']
 players  = []
 d_cartas = {}
@@ -52,6 +53,11 @@ def get_players(porta):
 
 @get('/distribuir_cartas')
 def distribuir_cartas():
+	if len(players) < 4 or len(players) > 26:
+		erros.update({1: "Para distribuir cartas precisa ter entre 4 e 26 jogadores"})
+		redirect('/')
+
+
 	l = []
 	for p in players:
 		if not d_cartas.get(p):
@@ -88,7 +94,9 @@ def get_cartas():
 @get('/')
 @view('index')
 def index():
-	return {'cartas': cartas}
+	erros_aux = erros.copy()
+	erros.clear()
+	return {'cartas': cartas, 'erros': erros_aux.values()}
 
 
 @route('/img/:filename', name='static')

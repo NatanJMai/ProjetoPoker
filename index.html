@@ -15,12 +15,25 @@
 	<body>
 		<div class="container">
 			<h1>Lista de Cartas</h1>
+			
+			%if erros:
+				<div class="col-md-12">
+					<div class="alert alert-dismissible alert-danger">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						%for e in erros:
+  							{{e}}
+						%end
+					</div>
+				</div>	
+			%end	
+
 
 			<div class="col-md-12">
 				<a href="/gerar_cartas" class="btn btn-primary">Gerar</a>
 				<a href="/embaralhar_cartas" class="btn btn-primary">Embaralhar</a>
 				<a href="/distribuir_cartas" class="btn btn-primary">Distribuir Cartas</a>
 			</div>
+
 
 			<div class="col-md-12">
 		    	%for c in cartas:
@@ -52,6 +65,8 @@
 
 		</div>
 
+		<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 	</body>
 </html>
