@@ -19,6 +19,7 @@ h_cartas = {}
 def comparar(a , b):
 	return max(h_cartas[a], h_cartas[b])
 
+
 def hierarquia_cartas():
 	for i in range(2,10):
 		h_cartas[str(i)] = i
@@ -28,6 +29,7 @@ def hierarquia_cartas():
 	h_cartas['Q'] = 12
 	h_cartas['K'] = 13
 	h_cartas['A'] = 14
+
 
 @get('/gerar_cartas')
 def gera_cartas():
@@ -63,6 +65,7 @@ def distribuir_cartas():
 		if not d_cartas.get(p):
 			mao = get_cartas()
 			d_cartas[p] = ast.literal_eval(mao)
+			print(mao)
 			requests.get('http://localhost:' + p + '/recebe_cartas/' + mao)
 
 			valor = comparar(d_cartas[p][0][0], d_cartas[p][1][0])
