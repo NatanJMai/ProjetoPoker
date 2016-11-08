@@ -47,10 +47,12 @@ def embaralhar_cartas():
 	redirect('/')
 
 
+# funcao para registrar os clientes no servidor
 @get('/get_players/<porta>')
 def get_players(porta):
 	if porta not in players:
 		players.append(porta)
+
 
 
 @get('/distribuir_cartas')
@@ -84,8 +86,15 @@ def distribuir_cartas():
 	#	print("Maior Carta: %d" % l[0][1])
 
 	# print(l)
-
+	distribuir_clientes()
 	redirect('/')
+
+
+@get('/distribuir_clientes')
+def distribuir_clientes():
+	for p in players:
+		requests.get('http://localhost:'+ p + '/recebe_clientes/'+ json.dumps(players))
+
 
 
 def get_cartas():
