@@ -67,7 +67,7 @@ def distribuir_cartas():
 		if not d_cartas.get(p):
 			mao = get_cartas()
 			d_cartas[p] = ast.literal_eval(mao)
-			print(mao)
+			#print(mao)
 			requests.get('http://localhost:' + p + '/recebe_cartas/' + mao)
 
 			valor = comparar(d_cartas[p][0][0], d_cartas[p][1][0])
@@ -82,11 +82,15 @@ def distribuir_cartas():
 		maior = l[0]
 
 		print("Maior Carta: ", maior)
+		distribuir_clientes()
+		address = 'http://localhost:'+maior[0]+'/acordo'
+		#print(address)
+		requests.get(address)
 	#else:
 	#	print("Maior Carta: %d" % l[0][1])
 
 	# print(l)
-	distribuir_clientes()
+	
 	redirect('/')
 
 

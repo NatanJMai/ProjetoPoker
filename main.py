@@ -4,13 +4,13 @@ from sys import argv
 
 def run():
     os.system("python3 server.py 8080 &")
-    time.sleep(2)
+    time.sleep(1)
     os.system("python3 client.py 8010 8080 &")
-    time.sleep(2)
+    time.sleep(1)
     os.system("python3 client.py 8020 8080 &")
-    time.sleep(2)
+    time.sleep(1)
     os.system("python3 client.py 8030 8080 &")
-    time.sleep(2)
+    time.sleep(1)
     os.system("python3 client.py 8040 8080 &")
 
 

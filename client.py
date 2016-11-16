@@ -55,8 +55,8 @@ def recebe_clientes(cli):
 def acordo():
     print("Clientes:", clientes)
     for c in clientes:
-        print(c)
         if c != argv[1]:
+            print('\n--------- Cliente: '+ c +'------------')
             print('http://localhost:' + c + '/eh_maior/' + str(cartas))
             requests.get('http://localhost:' + c + '/eh_maior/' + str(cartas))
 
