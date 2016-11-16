@@ -4,10 +4,11 @@ import ast
 from sys import argv
 from bottle import run, get, post, view, request, redirect, route, static_file
 
-cartas  = []
-server = argv[2]
+cartas   = []
+server   = argv[2]
 h_cartas = {}
 clientes = []
+ganhou   = False
 
 
 def comparar(a , b):
@@ -35,13 +36,16 @@ def eh_maior(cartas_adv):
     hierarquia_cartas()
     adv = comparar(cartas_adv[0][0], cartas_adv[1][0])
     eu = comparar(cartas[0][0], cartas[1][0])
-    if adv > eu:
-        print("Sim")
-    else:
-        print("Nao")
 
     print("Cartas adv:", cartas_adv, adv)
     print("Minhas cartas: ", cartas, eu)
+
+    if adv >= eu:
+        print("Sim")
+        return 'maior'
+    else:
+        print("Nao")
+
 
 
 @get('/recebe_clientes/<cli>')
@@ -54,25 +58,34 @@ def recebe_clientes(cli):
 @get('/acordo')
 def acordo():
     print("Clientes:", clientes)
+    cont  = 0
     for c in clientes:
         if c != argv[1]:
             print('\n--------- Cliente: '+ c +'------------')
             print('http://localhost:' + c + '/eh_maior/' + str(cartas))
-            requests.get('http://localhost:' + c + '/eh_maior/' + str(cartas))
+            ret = requests.get('http://localhost:' + c + '/eh_maior/' + str(cartas))
+            if ret.text == 'maior': cont += 1
+                
+        if cont == (len(c)-1):
+            global ganhou
+            ganhou = True
 
 
 @get('/recebe_cartas/<mao>')
 def recebe_cartas(mao):
-    global cartas
-    mao = ast.literal_eval(mao)
-    cartas += mao
-
+	global cartas, ganhou
+	if mao != 'reset':
+		mao = ast.literal_eval(mao)
+		cartas += mao
+	else:
+		del cartas[:]
+		ganhou = False
 
 @get('/')
 @view('client')
 def index():
 	#convert_cartas = ast.literal_eval(cartas[0]) if cartas else []
-	return {'cartas': cartas}
+	return {'cartas': cartas, 'vencedor': ganhou}
 
 
 envia_cliente()

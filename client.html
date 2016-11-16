@@ -10,23 +10,30 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 	<head>
-		<title>chatWeb</title>
+		<title>ProjetoPoker</title>
 	</head>
 	<body>
 		<div class="container">
 
-			<h2>Jogador, suas cartas são:</h2>
-
 			<div class="col-md-12">
-		    	%for c in cartas:
-			    	<div class="col-md-3" style="padding: 10px;">
-			    		<img src="/img/{{c}}.png" alt="">
-			    	</div>
+				%if vencedor:
+					<div class="alert alert-success" style="margin-top: 15px;">
+						<strong>Parabéns!</strong> Você foi o ganhador.
+					</div>
 				%end
 			</div>
-
+			<div class="col-md-12">
+				%if cartas:
+					<h2>Jogador, suas cartas são:</h2>
+					%for c in cartas:
+						<div class="col-md-3" style="padding: 10px;">
+							<img src="/img/{{c}}.png" alt="">
+						</div>
+					%end
+				%else:
+					<h2>Jogador, a partida ainda não iniciou. Aguarde...</h2>
+				%end
+			</div>
 		</div>
-
-
 	</body>
 </html>

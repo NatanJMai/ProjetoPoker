@@ -38,13 +38,14 @@ def gera_cartas():
 		for i in naipes:
 			for j in valores:
 				cartas.append(j+i)
+	embaralhar_cartas()
 	redirect('/')
 
 
 @get('/embaralhar_cartas')
 def embaralhar_cartas():
 	random.shuffle(cartas)
-	redirect('/')
+	# redirect('/')
 
 
 # funcao para registrar os clientes no servidor
@@ -54,6 +55,15 @@ def get_players(porta):
 		players.append(porta)
 
 
+@get('/resetar_jogo')
+def resetar_jogo():
+	global cartas
+	for p in players:
+		requests.get('http://localhost:' + p + '/recebe_cartas/' + 	'reset')
+	del cartas[:]
+	d_cartas.clear()
+	redirect('/')
+	
 
 @get('/distribuir_cartas')
 def distribuir_cartas():
@@ -61,10 +71,9 @@ def distribuir_cartas():
 		erros.update({1: "Para distribuir cartas precisa ter entre 4 e 26 jogadores"})
 		redirect('/')
 
-
 	l = []
 	for p in players:
-		if not d_cartas.get(p):
+		if not d_cartas.get(p) and cartas:
 			mao = get_cartas()
 			d_cartas[p] = ast.literal_eval(mao)
 			#print(mao)
@@ -86,10 +95,6 @@ def distribuir_cartas():
 		address = 'http://localhost:'+maior[0]+'/acordo'
 		#print(address)
 		requests.get(address)
-	#else:
-	#	print("Maior Carta: %d" % l[0][1])
-
-	# print(l)
 	
 	redirect('/')
 
@@ -102,9 +107,10 @@ def distribuir_clientes():
 
 
 def get_cartas():
-	c1 = cartas.pop(0)
-	c2 = cartas.pop(0)
-	return json.dumps([c1, c2])
+	if cartas:
+		c1 = cartas.pop(0)
+		c2 = cartas.pop(0)
+		return json.dumps([c1, c2])
 
 
 @get('/')

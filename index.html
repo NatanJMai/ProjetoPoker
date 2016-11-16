@@ -10,11 +10,11 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 	<head>
-		<title>chatWeb</title>
+		<title>ProjetoPoker</title>
 	</head>
 	<body>
-		<div class="container">
-			<h1>Lista de Cartas</h1>
+		<div class="container" align="center">
+			<h1>Poker</h1>
 			
 			%if erros:
 				<div class="col-md-12">
@@ -29,16 +29,23 @@
 
 
 			<div class="col-md-12">
-				<a href="/gerar_cartas" class="btn btn-primary">Gerar</a>
-				<a href="/embaralhar_cartas" class="btn btn-primary">Embaralhar</a>
-				<a href="/distribuir_cartas" class="btn btn-primary">Distribuir Cartas</a>
+				<a href="/gerar_cartas" class="btn btn-primary">Gerar Cartas</a>
+				<!-- <a href="/embaralhar_cartas" class="btn btn-success">Embaralhar</a> -->
+				<a href="/distribuir_cartas" class="btn btn-success">Iniciar Jogo</a>
+				<a href="/resetar_jogo" class="btn btn-danger">Reiniciar</a>
 			</div>
+
+			<div class="col-md-12">
+
+			
+			</div>
+
 
 
 			<div class="col-md-12">
 		    	%for c in cartas:
 			    	<div class="col-md-2" style="padding: 10px;">
-			    		<img src="/img/{{c}}.png" alt="" height="182" width="125">
+			    		<img class="zoomIn" src="/img/{{c}}.png" alt="" height="182" width="125">
 			    	</div>
 				%end
 			</div>
